@@ -1,24 +1,33 @@
 pipeline {
     agent any
-        
+
+    environment {
+        DATABASE_URL = credentials('DATABASE_URL')
+        JWT_SECRET   = credentials('JWT_SECRET')
+        PORT         = '4000'
+    }
+
     stages {
+
         stage("Code Clone") {
             steps {
                 echo "Cloning the repository..."
                 git url: "https://github.com/Rayees1907/FullStack_Application_Project.git", branch: "main"
-                echo "Repository cloned successfully."
+                echo "Repository cloned."
             }
         }
+
         stage("Build") {
             steps {
-                echo "Building the project..."
+                echo "Building Docker images..."
                 sh "docker compose build --no-cache"
-                echo "Build completed successfully."
+                echo "Docker images built."
             }
         }
-        stage("dockerhub Login") {
+
+        stage("DockerHub Login") {
             steps {
-                echo "Logging into Docker Hub..."
+                echo "Logging into DockerHub..."
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerHubCreds',
                     usernameVariable: 'DOCKER_USER',
@@ -26,22 +35,24 @@ pipeline {
                 )]) {
                     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
                 }
-                echo "Logged into Docker Hub successfully."
+                echo "Logged into DockerHub."
             }
         }
-        stage("Push to Docker Hub") {
+
+        stage("Push Images") {
             steps {
-                echo "Pushing images to Docker Hub..."
+                echo "Pushing Docker images to DockerHub..."
                 sh "docker compose push"
-                echo "Images pushed to Docker Hub successfully."
+                echo "Docker images pushed."
             }
         }
+
         stage("Deploy") {
             steps {
-                echo "Deploying the application..."
+                echo "Deploying application using Docker Compose..."
                 sh "docker compose down"
-                sh "docker compose up -d"
-                echo "Application deployed successfully."
+                sh "docker compose up -d --force-recreate"
+                echo "Application deployed."
             }
         }
     }
