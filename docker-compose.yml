@@ -1,7 +1,7 @@
 
 services:
   backend:
-    image: syedrayees/bank_management_system_backend:latest    # auto tagging via Jenkins
+    image: rayees1907/backend:${TAG}
     build: ./backend
     container_name: backend
     environment:
@@ -19,7 +19,7 @@ services:
       - appnet
 
   frontend:
-    image: syedrayees/bank_management_system_frontend:latest
+    image: rayees1907/frontend:${TAG}
     build: ./frontend   # uses your Dockerfile
     container_name: frontend
     ports:
