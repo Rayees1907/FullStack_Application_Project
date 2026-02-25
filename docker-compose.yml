@@ -4,10 +4,8 @@ services:
     build: ./backend
     image: syedrayees/backend:${TAG}
     container_name: backend
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-      JWT_SECRET: ${JWT_SECRET}
-      PORT: ${PORT}
+    env_file:
+      - .env
     expose:
       - "4000"   # internal only
     healthcheck:
