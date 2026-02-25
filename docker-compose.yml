@@ -2,7 +2,7 @@
 services:
   backend:
     build: ./backend
-    image: rayees1907/backend:${TAG}
+    image: syedrayees/backend:${TAG}
     container_name: backend
     environment:
       DATABASE_URL: ${DATABASE_URL}
