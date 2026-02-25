@@ -241,7 +241,7 @@ export default function App() {
       <div className="hero-circle one" />
       <div className="hero-circle two" />
       <div className="hero-circle three" />
-      <header><h1>Simple Bank</h1></header>
+      <header><h1>Mera Bank</h1></header>
 
       {view !== 'dashboard' && (
         <div className="auth-switch">
