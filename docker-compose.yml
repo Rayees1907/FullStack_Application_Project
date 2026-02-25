@@ -1,7 +1,6 @@
 
 services:
   backend:
-    build: ./backend
     image: syedrayees/backend:${TAG}
     container_name: backend
     env_file:
@@ -17,7 +16,6 @@ services:
       - appnet
 
   frontend:
-    build: ./frontend
     image: syedrayees/frontend:${TAG}
     container_name: frontend
     ports:
